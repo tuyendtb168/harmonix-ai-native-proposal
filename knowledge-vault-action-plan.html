@@ -1,0 +1,201 @@
+<style>
+  :root {
+    --ink: #f1f2ef; --ink-raised: #ffffff; --ink-sunken: #e7e8e3;
+    --text: #1a1d1f; --text-muted: #5b6168; --border: #dcddd7;
+    --accent: #a8661e; --accent-soft: #a8661e17;
+    --teal: #2f6e68; --teal-soft: #2f6e681c;
+    --now: #9c3b2e; --soon: #b8892f; --ongoing: #2f6e68;
+    --shadow: 0 1px 2px rgba(20,20,15,0.05), 0 10px 28px -14px rgba(20,20,15,0.16);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+    --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #0c0f14; --ink-raised: #161b22; --ink-sunken: #0f131a;
+      --text: #e7e8e6; --text-muted: #8b9199; --border: #262b33;
+      --accent: #e0973f; --accent-soft: #e0973f20;
+      --teal: #59a79d; --teal-soft: #59a79d20;
+      --now: #c76a56; --soon: #d3a75a; --ongoing: #59a79d;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 14px 34px -16px rgba(0,0,0,0.65);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #0c0f14; --ink-raised: #161b22; --ink-sunken: #0f131a;
+    --text: #e7e8e6; --text-muted: #8b9199; --border: #262b33;
+    --accent: #e0973f; --accent-soft: #e0973f20;
+    --teal: #59a79d; --teal-soft: #59a79d20;
+    --now: #c76a56; --soon: #d3a75a; --ongoing: #59a79d;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 14px 34px -16px rgba(0,0,0,0.65);
+  }
+  :root[data-theme="light"] {
+    --ink: #f1f2ef; --ink-raised: #ffffff; --ink-sunken: #e7e8e3;
+    --text: #1a1d1f; --text-muted: #5b6168; --border: #dcddd7;
+    --accent: #a8661e; --accent-soft: #a8661e17;
+    --teal: #2f6e68; --teal-soft: #2f6e681c;
+    --now: #9c3b2e; --soon: #b8892f; --ongoing: #2f6e68;
+    --shadow: 0 1px 2px rgba(20,20,15,0.05), 0 10px 28px -14px rgba(20,20,15,0.16);
+  }
+
+  * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: reduce) { *{ animation:none!important; transition:none!important; } }
+
+  body {
+    margin: 0; background: var(--ink); color: var(--text);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 72px 32px 96px; }
+  @media (max-width: 600px) { .wrap { padding: 48px 20px 72px; } }
+
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--ink-sunken); padding: 1px 6px; border-radius: 4px; }
+
+  /* ---- Header ---- */
+  .kicker {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .kicker::before { content: ""; width: 22px; height: 1px; background: var(--accent); }
+  h1 { font-size: clamp(28px, 4.4vw, 38px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; max-width: 18ch; }
+
+  .goal {
+    margin-top: 22px; padding: 18px 20px; border-radius: 12px;
+    background: var(--ink-raised); border: 1px solid var(--border); box-shadow: var(--shadow);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .goal .gk { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; padding-top: 3px; }
+  .goal p { margin: 0; font-size: 14.5px; color: var(--text); line-height: 1.6; }
+
+  .stats { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 26px; font-family: var(--mono); font-size: 11.5px; color: var(--text-muted); }
+  .stats strong { color: var(--text); font-weight: 600; }
+
+  /* ---- Section labels ---- */
+  .section-label {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin: 56px 0 18px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-label span.n { color: var(--accent); }
+
+  /* ---- Action items ---- */
+  .items { display: flex; flex-direction: column; gap: 12px; }
+  .item {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--ink-raised);
+    box-shadow: var(--shadow); padding: 20px 22px; display: grid;
+    grid-template-columns: 40px 1fr; gap: 16px;
+  }
+  .item .idx { font-family: var(--mono); font-size: 13px; color: var(--text-muted); padding-top: 2px; }
+  .item h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+  .item p { margin: 0 0 14px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 60ch; }
+  .item p:last-of-type { margin-bottom: 0; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--mono); font-size: 11px; padding: 4px 10px; border-radius: 20px;
+    display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); color: var(--text);
+  }
+  .chip .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .chip.owner { background: var(--teal-soft); border-color: color-mix(in srgb, var(--teal) 35%, transparent); color: var(--teal); }
+  .chip.due { color: var(--text); }
+  .chip.due.now .dot { background: var(--now); } .chip.due.now { border-color: color-mix(in srgb, var(--now) 40%, transparent); }
+  .chip.due.soon .dot { background: var(--soon); } .chip.due.soon { border-color: color-mix(in srgb, var(--soon) 40%, transparent); }
+  .chip.due.ongoing .dot { background: var(--ongoing); } .chip.due.ongoing { border-color: color-mix(in srgb, var(--ongoing) 40%, transparent); }
+
+  /* ---- Principles ---- */
+  .principles { display: flex; flex-direction: column; gap: 14px; }
+  .principle {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 18px;
+  }
+  .principle h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 6px; }
+  .principle p { margin: 0; font-size: 13.5px; color: var(--text-muted); line-height: 1.65; max-width: 64ch; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  ::selection { background: var(--accent-soft); color: var(--text); }
+</style>
+
+<div class="wrap">
+
+  <div class="kicker">Nội bộ · Báo cáo kế hoạch</div>
+  <h1>Triển khai Knowledge Vault — giai đoạn tới</h1>
+
+  <div class="goal">
+    <span class="gk">Mục tiêu</span>
+    <p>Bắt đầu vận hành Knowledge Vault (Obsidian + Git) làm bước hành động đầu tiên, cụ thể, hướng tới tự động hóa dần các hoạt động còn lại của team.</p>
+  </div>
+
+  <div class="stats">
+    <span><strong>4</strong> action items</span>
+    <span><strong>2</strong> mốc trong tuần này</span>
+    <span><strong>Toàn team</strong> tham gia</span>
+  </div>
+
+  <div class="section-label"><span class="n">01—04</span> Action items</div>
+  <div class="items">
+
+    <div class="item">
+      <span class="idx">01</span>
+      <div>
+        <h3>Setup Master Vault</h3>
+        <p>Mỗi member <code>pull</code> repo Obsidian Master Vault về máy để có bản tri thức chung, đồng thời sync ngược dữ liệu cá nhân (workflow, automation solutions đã implement, rules đang áp dụng) lên Master để thử nghiệm lô tài liệu đầu tiên.</p>
+        <div class="chips">
+          <span class="chip owner">● Tất cả members</span>
+          <span class="chip due soon"><span class="dot"></span>Cuối tuần này</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="idx">02</span>
+      <div>
+        <h3>Query layer</h3>
+        <p>Dùng AI query layer Vinh đã build cho anh Hưng — member tra cứu tri thức qua AI này mà <b>không cần</b> pull cả repo Master về máy. Anh Frank dùng chính kênh này để theo dõi/truy vấn tiến độ setup của members ở mục 01.</p>
+        <div class="chips">
+          <span class="chip owner">● Anh Frank (sử dụng) · Vinh (đã build)</span>
+          <span class="chip due ongoing"><span class="dot"></span>Đang dùng ngay</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="idx">03</span>
+      <div>
+        <h3>Rule đồng bộ &amp; permission</h3>
+        <p>Vinh soạn file <code>.md</code> quy định rule đồng bộ dữ liệu lên Master Vault (ai được ghi gì, format, review trước khi merge…); các member khác đóng góp bổ sung để tránh vault bị rác khi nhiều người cùng đẩy tài liệu lên.</p>
+        <div class="chips">
+          <span class="chip owner">● Vinh (draft) + cả team (góp ý)</span>
+          <span class="chip due soon"><span class="dot"></span>Song song với mục 01</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <span class="idx">04</span>
+      <div>
+        <h3>Research đối chiếu hướng xây dựng</h3>
+        <p>Họp lại để research cách các bên khác đang xây automation, bổ sung vào cách làm hiện tại của team.</p>
+        <div class="chips">
+          <span class="chip owner">● Anh Khiêm, Bean, Tuyên</span>
+          <span class="chip due now"><span class="dot"></span>Thứ 5</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label"><span class="n">＋</span> Định hướng &amp; nguyên tắc</div>
+  <div class="principles">
+    <div class="principle">
+      <h3>Public repo (về sau)</h3>
+      <p>Khi có dữ liệu phù hợp để công khai ra ngoài, sẽ <b>chọn lọc</b> và tách sang một repo public riêng — không ảnh hưởng đến Vault nội bộ đang xây.</p>
+    </div>
+    <div class="principle">
+      <h3>Vì sao làm trước khi mọi thứ hoàn chỉnh</h3>
+      <p>Đây là hoạt động thiên về vận hành, mang tính dài hạn — chủ trương <b>vừa build vừa thử, vừa review</b> để tìm hướng phù hợp và tối ưu nhất. Nếu sau buổi research (mục 04) team quyết định tái cấu trúc lại cách xây dựng, các hoạt động đã làm ở giai đoạn này vẫn không phải là công sức lãng phí — vì mục tiêu ban đầu là thử nghiệm và thu thập dữ liệu thực tế để review, không phải xây một lần đúng ngay.</p>
+    </div>
+  </div>
+
+  <footer>
+    <span>Knowledge Vault Action Plan</span>
+    <span>docs/knowledge-vault-action-plan.md</span>
+  </footer>
+
+</div>
